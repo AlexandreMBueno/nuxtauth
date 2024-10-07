@@ -45,30 +45,19 @@ export default {
   name: 'Exercicios',
   data() {
     return {
-      exercises: [
-        { 
-          id: 1, 
-          question: "O que é uma ação?", 
-          options: ["A) Um título de dívida", "B) Parte do capital de uma empresa", "C) Um título governamental", "D) Um tipo de empréstimo"], 
-          completed: false 
-        },
-        { 
-          id: 2, 
-          question: "O que é um dividendo?", 
-          options: ["A) Parte dos lucros de uma empresa distribuída aos acionistas", "B) Um imposto sobre investimentos", "C) Um tipo de ação", "D) Uma taxa de corretagem"], 
-          completed: false 
-        },
-        { 
-          id: 3, 
-          question: "O que significa taxa de juros?", 
-          options: ["A) O valor cobrado pelo uso do dinheiro", "B) Um tipo de investimento", "C) Uma taxa para comprar ações", "D) O valor das ações de uma empresa"], 
-          completed: false 
-        },
-      ],
+      exercises: [],
       selectedExercise: null,
       selectedAnswer: '',
       responseMessage: '',
     };
+  },
+  async mounted() {
+    try {
+      const response = await fetch('/api/exercicios');
+      this.exercises = await response.json();
+    } catch (error) {
+      console.error('Erro ao carregar os exercícios:', error);
+    }
   },
   methods: {
     selectExercise(exercise) {
